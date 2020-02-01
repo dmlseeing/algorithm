@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lodashGet</title>
+</head>
+<body>
+</body>
+<!--lodash的引用-->
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+<script>
+    // 实现lodash的get方法
+    // 测试数据1：
+    let object = {'a': [{ 'b': { 'c': 3 } }] };
+    let path = 'a[0].b.c';
+    // let path = ['a', '0', 'b', 'c'];
+    // let path = 'a.b.c';
+    // let path = null;
+    // let path = 'null';
+    // let path = '';
+
+    // 测试数据2：
+    // let object = {'a': [{ 'b': { 'c': 3 } }, { 'd': { 'e': { 'f': 6 }}}] };
+    // let path = 'a[1].d.e.f';
+    // let path = ['a', '1', 'd', 'e', 'f'];
+
+    // 测试数据3：
+    // let object = null;
+    // let object = 'null';
+    // let path = '';
+
+    window.console.info(_.get(object, path, 'default'));
+    window.console.info(lodashGet(object, path, 'default'));
+
+    function lodashGet(object, path, defaultValue) {
+        let temp = object;
+        if (object === null || path === null) {
+            object = undefined;
+        } else {
+            if (typeof path === 'string') {
+                path = path.replace(/\[/g, '.').replace(/\]/g, '').split('.');
+            }
+
+            // Q1:while和for循环哪个效率比较高
+            let i = 0;
+            while (object !== undefined && i < path.length) {
+                object = object[path[i++]];
+            }
+
+            // Q2:下面两个for循环中，两个循环哪个比较好? 第一个要到i==path.length时才退出循环，
+            // 第二个在object === undefined的情况下提前退出循环，或者还有改进方案
+            // for (let i = 0; i < path.length; i++) {
+            //     if (object !== undefined) {
+            //         object = object[path[i]];
+            //     }
+            // }
+
+            // for (let i = 0; i < path.length; i++) {
+            //     if (object === undefined) {
+            //         break;
+            //     } else {
+            //         object = object[path[i]];
+            //     }
+            // }
+        }
+
+        // 考虑defaultValue
+        return object === undefined || object === temp ? defaultValue : object;
+        // 不考虑defaultValue
+        // return object === temp ? undefined : object;
+    }
+
+</script>
+</html>
