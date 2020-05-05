@@ -36,3 +36,18 @@ function selectionSort(arr) {
   }
   return arr;
 }
+
+
+// 插入排序
+function insertionSort(arr) {
+  var len = arr.length;
+  var preIndex, current;
+  for (var i = 1; i < len; i++) {
+    current = arr[i];
+    for (preIndex = i - 1; preIndex >= 0 && arr[preIndex] > current; preIndex--) {
+      arr[preIndex + 1] = arr[preIndex];
+    }
+    arr[preIndex + 1] = current;
+  }
+  return arr;
+}
