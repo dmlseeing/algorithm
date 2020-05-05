@@ -33,6 +33,6 @@ function selectionSort(arr) {
       arr[i] = arr[minIndex];
       arr[minIndex] = temp;
     }
-    return arr;
   }
+  return arr;
 }
